@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="https://vitejs.dev/logo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <section x-data="facts" x-init="facts = []">
+        <h1 class="text-2xl font-medium">Facts!</h1>
+
+        <section class="flex">
+          <template x-for="fact in facts.data">
+            <div class="max-w-sm rounded overflow-hidden shadow-lg">
+              <div class="px-6 py-4">
+                <h3 x-text="fact.type"></h3>
+                <p
+                  class="text-gray-700 text-base"
+                  x-text="fact.attributes.body"
+                ></p>
+              </div>
+            </div>
+          </template>
+        </section>
+
+        <form x-data="{ limit: 1 }" @submit.prevent="getFacts(limit)">
+          <input
+            type="number"
+            x-model="limit"
+            placeholder="Enter number of facts"
+          />
+          <input
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            type="submit"
+            value="Get Facts"
+          />
+        </form>
+      </section>
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
