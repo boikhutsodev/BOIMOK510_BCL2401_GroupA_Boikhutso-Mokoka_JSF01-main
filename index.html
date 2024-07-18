@@ -2,44 +2,67 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="https://vitejs.dev/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>FlexStore</title>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
   </head>
+  <body x-data="store" class="bg-gray-100 min-h-screen">
+    <!-- Navigation Bar -->
+    <nav class="bg-blue-600 p-4 text-white">
+      <div class="container mx-auto flex justify-between items-center">
+        <div class="text-lg font-bold">MyFlexStore</div>
+        <div>
+          <a href="#" class="mr-4 hover:underline">Home</a>
+          <a href="#" class="mr-4 hover:underline">Products</a>
+          <a href="#" class="hover:underline">Login</a>
+        </div>
+      </div>
+    </nav>
 
-  <body>
-    <div id="app">
-      <section x-data="facts" x-init="facts = []">
-        <h1 class="text-2xl font-medium">Facts!</h1>
-
-        <section class="flex">
-          <template x-for="fact in facts.data">
-            <div class="max-w-sm rounded overflow-hidden shadow-lg">
-              <div class="px-6 py-4">
-                <h3 x-text="fact.type"></h3>
-                <p
-                  class="text-gray-700 text-base"
-                  x-text="fact.attributes.body"
-                ></p>
-              </div>
-            </div>
+    <!-- Main Content -->
+    <div class="container mx-auto p-6">
+      <div class="flex justify-between mb-4">
+        <select x-model="selectedCategory" class="border p-2 rounded">
+          <option value="">All Categories</option>
+          <template x-for="category in categories" :key="category">
+            <option :value="category" x-text="category"></option>
           </template>
-        </section>
+        </select>
+        <select x-model="sortOrder" class="border p-2 rounded">
+          <option value="">Sort by Price</option>
+          <option value="asc">Lowest to Highest</option>
+          <option value="desc">Highest to Lowest</option>
+        </select>
+      </div>
 
-        <form x-data="{ limit: 1 }" @submit.prevent="getFacts(limit)">
-          <input
-            type="number"
-            x-model="limit"
-            placeholder="Enter number of facts"
-          />
-          <input
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            type="submit"
-            value="Get Facts"
-          />
-        </form>
-      </section>
+      <div class="loading text-center text-2xl" x-show="loading">
+        Loading...
+      </div>
+
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        x-show="!loading"
+      >
+        <template x-for="product in filteredProducts" :key="product.id">
+          <div
+            class="card border p-4 rounded shadow hover:shadow-lg transition-shadow duration-300"
+            @click="openModal(product)"
+          >
+            <img
+              :src="product.image"
+              alt=""
+              class="w-full h-48 object-cover mb-4"
+            />
+            <h3 class="text-lg font-bold" x-text="product.title"></h3>
+            <p class="text-gray-700" x-text="'$' + product.price"></p>
+            <p class="text-gray-500" x-text="product.category"></p>
+          </div>
+        </template>
+      </div>
     </div>
-    <script type="module" src="/main.js"></script>
   </body>
 </html>
