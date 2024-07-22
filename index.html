@@ -4,15 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FlexStore</title>
-    <script src="//unpkg.com/alpinejs" defer></script>
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
+    <!-- <script src="//unpkg.com/alpinejs" defer></script> -->
+    <link href="./style.css" rel="stylesheet" />
   </head>
   <body x-data="store" class="bg-pink-50 min-h-screen g-10">
     <!-- Navigation Bar -->
-    <nav class="fixed w-full bg-pink-600 p-4 text-pink-50 shadow-lg">
+    <nav
+      x-data="{open: false}"
+      class="fixed w-full bg-pink-600 p-4 text-pink-50 shadow-lg"
+    >
       <div class="container mx-auto flex justify-between items-center">
         <div class="text-lg font-bold">My FlexStore</div>
         <div class="hidden md:flex">
@@ -366,5 +366,6 @@
         };
       }
     </script>
+    <script type="module" src="./main.js"></script>
   </body>
 </html>
